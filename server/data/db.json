@@ -255,7 +255,23 @@
       }
     }
   ],
-  "consentRequests": [],
+  "consentRequests": [
+    {
+      "id": "cr-doc-1795196992201",
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic & Diagnostics",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Arvind Rao",
+      "requesterRole": "DOCTOR",
+      "requesterName": "Dr. Arvind Rao",
+      "status": "APPROVED",
+      "requestedAt": "2026-11-20T17:49:52.201Z",
+      "scope": "FULL_AI_HEALTH_REPORT",
+      "respondedAt": "2026-11-20T17:49:53.743Z"
+    }
+  ],
   "whatsappMessages": [
     {
       "id": "wa-1795196187513",
@@ -267,6 +283,55 @@
       "timestamp": "11:06 pm"
     }
   ],
-  "aiHealthReport": null,
+  "aiHealthReport": {
+    "chronic_conditions": [
+      "Type 2 Diabetes Mellitus",
+      "Essential Hypertension",
+      "Mild Dyslipidemia"
+    ],
+    "medication_history": [
+      {
+        "drug": "Metformin 500mg ER",
+        "status": "Active",
+        "adherence": "Not specified"
+      },
+      {
+        "drug": "Telmisartan 40mg",
+        "status": "Active",
+        "adherence": "Not specified"
+      },
+      {
+        "drug": "Atorvastatin 10mg",
+        "status": "Active",
+        "adherence": "Not specified"
+      }
+    ],
+    "abnormal_lab_trends": [
+      "HbA1c 7.1% (improved from 8.2%)",
+      "Fasting glucose 128 mg/dL",
+      "Serum Creatinine borderline at 1.1 mg/dL"
+    ],
+    "severity_flags": [
+      {
+        "level": "MODERATE",
+        "note": "Mild Left Ventricular Hypertrophy noted on echocardiogram consistent with longstanding hypertension."
+      }
+    ],
+    "doctor_discussion_points": [
+      "Review recent improvement in HbA1c down to 7.1%",
+      "Evaluate borderline serum creatinine level of 1.1 mg/dL in the context of diabetes and hypertension",
+      "Monitor blood pressure control and status of mild Left Ventricular Hypertrophy"
+    ],
+    "disclaimer": "AI-Generated Summary • For Clinical Review Only • Not a Medical Diagnosis",
+    "_modelUsed": "gemini-3.5-flash-lite",
+    "id": "report-1795196973741",
+    "patientId": "patient-rahul",
+    "patientName": "Suresh Sharma",
+    "period": "Last 6 Months",
+    "generatedAt": "2026-11-20T17:49:33.741Z",
+    "isAiGenerated": true,
+    "isDemoData": false,
+    "liveGemini": true
+  },
   "uploadedFiles": {}
 }
