@@ -1,0 +1,341 @@
+{
+  "appointments": [
+    {
+      "id": "apt-101",
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "patientPhone": "+91 98765 43210",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Arvind Rao",
+      "doctorSpecialty": "General Physician & Diabetologist",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic & Diagnostics",
+      "clinicAddress": "#42, 12th Main, 100ft Road, Indiranagar",
+      "slotTime": "10:30 AM",
+      "slotDate": "Today, Nov 20",
+      "status": "BOOKED",
+      "queuePosition": 2,
+      "feePaid": true,
+      "symptoms": "Persistent dry cough, mild fever for 2 days, chest congestion"
+    },
+    {
+      "id": "apt-100",
+      "patientId": "patient-vikram",
+      "patientName": "Vikram Malhotra",
+      "patientPhone": "+91 98220 11990",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Arvind Rao",
+      "doctorSpecialty": "General Physician & Diabetologist",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic & Diagnostics",
+      "clinicAddress": "#42, 12th Main, 100ft Road, Indiranagar",
+      "slotTime": "10:00 AM",
+      "slotDate": "Today, Nov 20",
+      "status": "IN_CONSULTATION",
+      "queuePosition": 1,
+      "checkedInAt": "09:55 AM",
+      "feePaid": true,
+      "symptoms": "Routine BP follow up"
+    },
+    {
+      "id": "apt-102",
+      "patientId": "patient-sneha",
+      "patientName": "Sneha Patel",
+      "patientPhone": "+91 97110 55420",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Arvind Rao",
+      "doctorSpecialty": "General Physician & Diabetologist",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic & Diagnostics",
+      "clinicAddress": "#42, 12th Main, 100ft Road, Indiranagar",
+      "slotTime": "11:15 AM",
+      "slotDate": "Today, Nov 20",
+      "status": "CHECKED_IN",
+      "queuePosition": 3,
+      "checkedInAt": "10:15 AM",
+      "feePaid": true,
+      "symptoms": "Gastric discomfort, nausea"
+    }
+  ],
+  "medicalRecords": [
+    {
+      "id": "rec-f1",
+      "patientId": "patient-rahul",
+      "patientName": "Suresh Sharma",
+      "familyMemberId": "fam-2",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic",
+      "doctorName": "Dr. Arvind Rao",
+      "visitDate": "2026-10-18",
+      "type": "BLOODWORK",
+      "title": "Comprehensive Diabetic & Lipid Profile",
+      "isAbnormal": true,
+      "aiSummary": "HbA1c decreased from 8.2% to 7.1% (Good progress). Fasting glucose 128 mg/dL. Serum Creatinine borderline at 1.1 mg/dL.",
+      "structuredData": {
+        "symptoms_diagnosis": "Diabetic routine quarterly evaluation",
+        "tests": [
+          {
+            "name": "HbA1c Glycated Hemoglobin",
+            "value": "7.1%",
+            "range": "< 5.7% (Normal), 7.0-8.0% (Target)"
+          },
+          {
+            "name": "Fasting Plasma Glucose",
+            "value": "128 mg/dL",
+            "range": "70-99 mg/dL"
+          },
+          {
+            "name": "Serum Creatinine",
+            "value": "1.1 mg/dL",
+            "range": "0.7 - 1.2 mg/dL"
+          },
+          {
+            "name": "Total Cholesterol",
+            "value": "188 mg/dL",
+            "range": "< 200 mg/dL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rec-f2",
+      "patientId": "patient-rahul",
+      "patientName": "Suresh Sharma",
+      "familyMemberId": "fam-2",
+      "clinicId": "clinic-2",
+      "clinicName": "Apollo Health Clinic",
+      "doctorName": "Dr. Priya Nair",
+      "visitDate": "2026-08-12",
+      "type": "SCAN",
+      "title": "12-Lead Resting ECG & Echocardiogram",
+      "isAbnormal": false,
+      "aiSummary": "Normal sinus rhythm (72 bpm). Mild Left Ventricular Hypertrophy consistent with longstanding hypertension. Ejection Fraction 60%.",
+      "structuredData": {
+        "symptoms_diagnosis": "Hypertensive cardiac surveillance",
+        "findings": "LVEF 60%, no regional wall motion abnormalities, normal valves."
+      }
+    },
+    {
+      "id": "rec-f3",
+      "patientId": "patient-rahul",
+      "patientName": "Suresh Sharma",
+      "familyMemberId": "fam-2",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic",
+      "doctorName": "Dr. Arvind Rao",
+      "visitDate": "2026-06-25",
+      "type": "PRESCRIPTION",
+      "title": "Hypertension & Glycemic Control Regimen",
+      "isAbnormal": false,
+      "aiSummary": "Prescribed Metformin 500mg ER twice daily, Telmisartan 40mg once daily in morning, Atorvastatin 10mg at bedtime.",
+      "structuredData": {
+        "symptoms_diagnosis": "Type 2 Diabetes Mellitus with Stage 1 Hypertension",
+        "medicines": [
+          {
+            "name": "Metformin 500mg ER",
+            "dosage": "1 tab",
+            "frequency": "Twice daily with meals",
+            "duration": "90 days"
+          },
+          {
+            "name": "Telmisartan 40mg",
+            "dosage": "1 tab",
+            "frequency": "Once daily (morning)",
+            "duration": "90 days"
+          },
+          {
+            "name": "Atorvastatin 10mg",
+            "dosage": "1 tab",
+            "frequency": "Once daily at night",
+            "duration": "90 days"
+          }
+        ],
+        "recommended_tests_scans": [
+          "HbA1c after 3 months",
+          "Urine Microalbumin/Creatinine Ratio"
+        ],
+        "follow_up_notes": "Maintain low sodium diet (< 2g/day) and 30 mins brisk walking daily."
+      }
+    },
+    {
+      "id": "rec-m1",
+      "patientId": "patient-rahul",
+      "patientName": "Meena Sharma",
+      "familyMemberId": "fam-3",
+      "clinicId": "clinic-3",
+      "clinicName": "LifeLine Ortho Center",
+      "doctorName": "Dr. Rajesh Kulkarni",
+      "visitDate": "2026-09-04",
+      "type": "SCAN",
+      "title": "Bilateral Knee X-Ray (Standing AP/Lateral)",
+      "isAbnormal": true,
+      "aiSummary": "Grade 2 Osteoarthritis medial compartment narrowing in both knees. Advised quadriceps strengthening and weight management.",
+      "structuredData": {
+        "symptoms_diagnosis": "Bilateral knee pain on ascending stairs",
+        "findings": "Joint space narrowing, early osteophyte formation."
+      }
+    },
+    {
+      "id": "rec-m2",
+      "patientId": "patient-rahul",
+      "patientName": "Meena Sharma",
+      "familyMemberId": "fam-3",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic",
+      "doctorName": "Dr. Arvind Rao",
+      "visitDate": "2026-07-15",
+      "type": "BLOODWORK",
+      "title": "Thyroid Function Test (T3, T4, TSH)",
+      "isAbnormal": false,
+      "aiSummary": "TSH is 2.8 uIU/mL (Well controlled on Thyronorm 50 mcg).",
+      "structuredData": {
+        "symptoms_diagnosis": "Routine hypothyroidism monitoring",
+        "tests": [
+          {
+            "name": "TSH",
+            "value": "2.8 uIU/mL",
+            "range": "0.4 - 4.5 uIU/mL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "rec-r1",
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "familyMemberId": "fam-1",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic",
+      "doctorName": "Dr. Arvind Rao",
+      "visitDate": "2026-05-10",
+      "type": "BLOODWORK",
+      "title": "Annual Executive Health Panel & Vitamins",
+      "isAbnormal": true,
+      "aiSummary": "Vitamin D3 is deficient at 14.2 ng/mL (Normal: 30-100). Vitamin B12 normal at 420 pg/mL. CBC normal.",
+      "structuredData": {
+        "symptoms_diagnosis": "Fatigue and seasonal allergies",
+        "tests": [
+          {
+            "name": "Vitamin D3 (25-OH)",
+            "value": "14.2 ng/mL",
+            "range": "30 - 100 ng/mL (Deficient)"
+          },
+          {
+            "name": "Vitamin B12",
+            "value": "420 pg/mL",
+            "range": "200 - 900 pg/mL"
+          },
+          {
+            "name": "Hemoglobin",
+            "value": "14.8 g/dL",
+            "range": "13.0 - 17.0 g/dL"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc-1795191224693-8ef496",
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "familyMemberId": "fam-1",
+      "clinicId": "clinic-uploaded",
+      "clinicName": "Audit Lab",
+      "doctorName": "Self-Uploaded",
+      "visitDate": "2026-11-20",
+      "type": "BLOODWORK",
+      "title": "Audit Verification Blood Test",
+      "fileUrl": "/api/documents/doc-1795191224693-8ef496/file?role=PATIENT",
+      "aiSummary": "Uploaded bloodwork (audit-lab-test.png) stored safely. Sample extraction fallback shown (live Gemini unavailable). Doctor review required.",
+      "isAbnormal": false,
+      "structuredData": {
+        "tests": [
+          {
+            "name": "Haemoglobin",
+            "value": "13.5 g/dL",
+            "range": "12.0 - 16.0 g/dL"
+          },
+          {
+            "name": "WBC Count",
+            "value": "7,200 cells/uL",
+            "range": "4,000 - 11,000 cells/uL"
+          }
+        ],
+        "isDemoData": true,
+        "liveGemini": false,
+        "uploadedFileName": "audit-lab-test.png"
+      }
+    }
+  ],
+  "consentRequests": [
+    {
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "clinicId": "clinic-audit-test",
+      "clinicName": "Audit Clinic",
+      "requesterRole": "DOCTOR",
+      "requesterName": "Dr. Audit",
+      "scope": "ALL_MEDICAL_RECORDS",
+      "id": "consent-1795191224653",
+      "status": "APPROVED",
+      "requestedAt": "2026-11-20T16:13:44.653Z",
+      "respondedAt": "2026-11-20T16:13:44.678Z"
+    },
+    {
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "clinicId": "clinic-audit-test",
+      "clinicName": "Audit Clinic",
+      "requesterRole": "DOCTOR",
+      "requesterName": "Dr. Audit",
+      "scope": "ALL_MEDICAL_RECORDS",
+      "id": "consent-1795192591162",
+      "status": "APPROVED",
+      "requestedAt": "2026-11-20T16:36:31.162Z",
+      "respondedAt": "2026-11-20T16:36:31.177Z"
+    }
+  ],
+  "whatsappMessages": [],
+  "aiHealthReport": {
+    "chronic_conditions": [
+      "Type 2 Diabetes Mellitus",
+      "Essential Hypertension"
+    ],
+    "medication_history": [],
+    "abnormal_lab_trends": [
+      "HbA1c 7.1% (Elevated)",
+      "Fasting glucose 128 mg/dL (Elevated)"
+    ],
+    "severity_flags": [
+      {
+        "level": "MODERATE",
+        "note": "Suboptimally controlled Type 2 Diabetes Mellitus with HbA1c at 7.1% and fasting glucose at 128 mg/dL."
+      }
+    ],
+    "doctor_discussion_points": [
+      "Discuss strategies to achieve glycemic targets given the current HbA1c of 7.1%.",
+      "Review current medication adherence and lifestyle interventions for diabetes and hypertension management.",
+      "Monitor renal function (Creatinine 1.1 mg/dL) periodically."
+    ],
+    "disclaimer": "AI-Generated Summary • For Clinical Review Only • Not a Medical Diagnosis",
+    "_modelUsed": "gemini-3.5-flash-lite",
+    "id": "report-1795192469455",
+    "patientId": "patient-rahul",
+    "patientName": "Suresh Sharma",
+    "period": "Last 6 Months",
+    "generatedAt": "2026-11-20T16:34:29.455Z",
+    "isAiGenerated": true,
+    "isDemoData": false,
+    "liveGemini": true
+  },
+  "uploadedFiles": {
+    "doc-1795191224693-8ef496": {
+      "id": "doc-1795191224693-8ef496",
+      "patientId": "patient-rahul",
+      "fileName": "audit-lab-test.png",
+      "storedName": "doc-1795191224693-8ef496.png",
+      "mimeType": "image/png",
+      "sizeBytes": 70,
+      "uploadedAt": "2026-11-20T16:13:44.696Z"
+    }
+  }
+}

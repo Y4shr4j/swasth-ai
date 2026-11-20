@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper: Verify an explicit APPROVED consent_request exists for the requesting clinic
+    function hasApprovedConsent(patientId, clinicId) {
+      return exists(/databases/$(database)/documents/consent_requests/$(patientId + '_' + clinicId)) &&
+        get(/databases/$(database)/documents/consent_requests/$(patientId + '_' + clinicId)).data.status == 'APPROVED';
+    }
+
+    // Public clinic & doctor discovery
+    match /clinics/{clinicId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.role == 'ADMIN';
+    }
+
+    match /doctors/{doctorId} {
+      allow read: if true;
+      allow write: if request.auth != null && (request.auth.token.role == 'ADMIN' || request.auth.token.role == 'DOCTOR');
+    }
+
+    // Live appointments & queue sync
+    match /appointments_queue/{appointmentId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Strict Patient-Owned Medical Records (Consent-Gated)
+    match /medical_records/{recordId} {
+      allow read: if request.auth != null && (
+        request.auth.uid == resource.data.patientId ||
+        hasApprovedConsent(resource.data.patientId, request.auth.token.clinicId)
+      );
+      allow create: if request.auth != null && (
+        request.auth.uid == request.resource.data.patientId ||
+        request.auth.token.role == 'DOCTOR'
+      );
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.patientId;
+    }
+
+    // Real-time Consent Requests (Only patient can approve or deny)
+    match /consent_requests/{consentId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null && request.resource.data.status == 'PENDING';
+      allow update: if request.auth != null && request.auth.uid == resource.data.patientId;
+    }
+  }
+}
