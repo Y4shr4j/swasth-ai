@@ -54,13 +54,13 @@ export default function AIHealthReportModal({ onClose }: { onClose: () => void }
               <div className="flex gap-2 flex-wrap">
                 {DATE_RANGES.map(d => (
                   <button key={d} onClick={() => setDateRange(d)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-medium transition ${dateRange === d ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-600'}`}>{d}</button>
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition ${dateRange === d ? 'bg-[#0B5D7A] text-white shadow-sm' : 'bg-[#EBF6FC] text-[#0B5D7A] hover:bg-[#D6EEF9]'}`}>{d}</button>
                 ))}
               </div>
             </div>
             <button onClick={handleGenerate} disabled={loading}
-              className="w-full py-3 bg-rose-600 text-white rounded-xl font-semibold hover:bg-rose-700 transition disabled:opacity-50 flex items-center justify-center gap-2">
-              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Analyzing with Gemini...</> : '🧠 Generate AI Health Report'}
+              className="w-full py-3 bg-[#0B5D7A] text-white rounded-xl font-semibold hover:bg-[#084961] shadow-sm transition disabled:opacity-50 flex items-center justify-center gap-2">
+              {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Analyzing with Gemini...</> : 'Generate AI Health Report'}
             </button>
           </div>
 

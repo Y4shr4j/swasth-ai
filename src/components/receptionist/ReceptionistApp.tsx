@@ -79,13 +79,13 @@ export default function ReceptionistApp() {
         {/* Stats Counter Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {[
-            { label: 'Total Today', val: stats.total, color: 'text-slate-800 bg-slate-100' },
-            { label: 'Pending Check-in', val: stats.booked, color: 'text-blue-700 bg-blue-50' },
-            { label: 'Waiting in Queue', val: stats.checkedIn, color: 'text-amber-700 bg-amber-50' },
-            { label: 'In Consultation', val: stats.inConsult, color: 'text-emerald-700 bg-emerald-50' },
-            { label: 'Completed', val: stats.completed, color: 'text-purple-700 bg-purple-50' },
+            { label: 'Total Today', val: stats.total, color: 'text-[#0F2A3D] bg-white border-[#DFECF5]' },
+            { label: 'Pending Check-in', val: stats.booked, color: 'text-[#0B5D7A] bg-[#EBF6FC] border-[#AEDCF2]' },
+            { label: 'Waiting in Queue', val: stats.checkedIn, color: 'text-amber-700 bg-amber-50 border-amber-200' },
+            { label: 'In Consultation', val: stats.inConsult, color: 'text-[#0EA5A4] bg-[#E6F7F5] border-[#99E2D8]' },
+            { label: 'Completed', val: stats.completed, color: 'text-[#084961] bg-[#D6EEF9] border-[#AEDCF2]' },
           ].map(s => (
-            <div key={s.label} className={`${s.color} rounded-xl p-4 text-center border border-black/5`}>
+            <div key={s.label} className={`${s.color} rounded-2xl p-4 text-center border shadow-sm`}>
               <div className="text-2xl font-bold">{s.val}</div>
               <div className="text-xs font-medium mt-1">{s.label}</div>
             </div>
@@ -124,7 +124,16 @@ export default function ReceptionistApp() {
                         </span>
                       </td>
                       <td className="px-4 py-3.5">
-                        <div className="font-semibold text-slate-900">{apt.patientName}</div>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-semibold text-slate-900">{apt.familyMemberName || apt.patientName}</span>
+                          <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#EBF6FC] text-[#0B5D7A] border border-[#AEDCF2]">
+                            {apt.consultationMode === 'VIDEO'
+                              ? 'Video'
+                              : apt.consultationMode === 'HOME_VISIT'
+                              ? 'Home Visit'
+                              : 'In-Clinic'}
+                          </span>
+                        </div>
                         <div className="text-xs text-slate-500 truncate max-w-xs">{apt.symptoms || 'General Checkup'}</div>
                       </td>
                       <td className="px-4 py-3.5 text-slate-600 font-medium whitespace-nowrap">

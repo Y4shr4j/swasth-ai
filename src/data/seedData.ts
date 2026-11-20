@@ -13,7 +13,8 @@ export const SEED_CLINICS: Clinic[] = [
     rating: 4.8,
     openHours: '08:00 AM - 09:00 PM',
     phone: '+91 80 2521 8899',
-    address: '#42, 12th Main, 100ft Road, HAL 2nd Stage, Indiranagar, Bengaluru'
+    address: '#42, 12th Main, 100ft Road, HAL 2nd Stage, Indiranagar, Bengaluru',
+    coords: { lat: 12.9719, lng: 77.6412 }
   },
   {
     id: 'clinic-2',
@@ -27,7 +28,8 @@ export const SEED_CLINICS: Clinic[] = [
     rating: 4.9,
     openHours: '08:30 AM - 08:30 PM',
     phone: '+91 80 4110 5500',
-    address: 'Plot 77, 80ft Road, Near Sony Signal, Koramangala 4th Block, Bengaluru'
+    address: 'Plot 77, 80ft Road, Near Sony Signal, Koramangala 4th Block, Bengaluru',
+    coords: { lat: 12.9352, lng: 77.6245 }
   },
   {
     id: 'clinic-3',
@@ -41,7 +43,8 @@ export const SEED_CLINICS: Clinic[] = [
     rating: 4.7,
     openHours: '09:00 AM - 08:00 PM',
     phone: '+91 80 2572 3344',
-    address: '14th Main, 17th Cross, HSR Layout Sector 1, Bengaluru'
+    address: '14th Main, 17th Cross, HSR Layout Sector 1, Bengaluru',
+    coords: { lat: 12.9121, lng: 77.6446 }
   }
 ];
 
@@ -122,6 +125,7 @@ export const SEED_FAMILY_MEMBERS: FamilyMember[] = [
     age: 32,
     gender: 'Male',
     phone: '+91 98765 43210',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face',
     govIds: {
       pan: 'ABCPS****F',
       aadhaar: 'XXXX-XXXX-4819',
@@ -137,6 +141,7 @@ export const SEED_FAMILY_MEMBERS: FamilyMember[] = [
     age: 64,
     gender: 'Male',
     phone: '+91 98765 43211',
+    avatar: 'https://images.unsplash.com/photo-1566616213894-2d4e1baee5d8?w=200&h=200&fit=crop&crop=face',
     govIds: {
       pan: 'ABZPS****K',
       aadhaar: 'XXXX-XXXX-9021',
@@ -154,6 +159,7 @@ export const SEED_FAMILY_MEMBERS: FamilyMember[] = [
     age: 59,
     gender: 'Female',
     phone: '+91 98765 43212',
+    avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face',
     govIds: {
       pan: 'AOYPS****M',
       aadhaar: 'XXXX-XXXX-7145',
@@ -170,6 +176,8 @@ export const SEED_INITIAL_APPOINTMENTS: Appointment[] = [
     patientId: 'patient-rahul',
     patientName: 'Rahul Sharma',
     patientPhone: '+91 98765 43210',
+    familyMemberId: 'fam-1',
+    familyMemberName: 'Rahul Sharma',
     doctorId: 'doc-1',
     doctorName: 'Dr. Arvind Rao',
     doctorSpecialty: 'General Physician & Diabetologist',
@@ -178,9 +186,10 @@ export const SEED_INITIAL_APPOINTMENTS: Appointment[] = [
     clinicAddress: '#42, 12th Main, 100ft Road, Indiranagar',
     slotTime: '10:30 AM',
     slotDate: 'Today, Nov 20',
+    consultationMode: 'IN_CLINIC',
     status: 'BOOKED',
     queuePosition: 2,
-    feePaid: true,
+    feePaid: false,
     symptoms: 'Persistent dry cough, mild fever for 2 days, chest congestion'
   },
   {

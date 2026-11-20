@@ -55,6 +55,27 @@
       "checkedInAt": "10:15 AM",
       "feePaid": true,
       "symptoms": "Gastric discomfort, nausea"
+    },
+    {
+      "id": "apt-1795196187511",
+      "patientId": "patient-rahul",
+      "patientName": "Rahul Sharma",
+      "patientPhone": "+91 98765 43210",
+      "familyMemberId": "fam-1",
+      "familyMemberName": "Rahul Sharma",
+      "doctorId": "doc-1",
+      "doctorName": "Dr. Arvind Rao",
+      "doctorSpecialty": "General Physician & Diabetologist",
+      "clinicId": "clinic-1",
+      "clinicName": "Apex Care Super Clinic & Diagnostics",
+      "clinicAddress": "#42, 12th Main, 100ft Road, HAL 2nd Stage, Indiranagar, Bengaluru",
+      "slotTime": "09:30 AM",
+      "slotDate": "Tomorrow, Nov 21",
+      "consultationMode": "IN_CLINIC",
+      "status": "BOOKED",
+      "queuePosition": 4,
+      "feePaid": false,
+      "symptoms": ""
     }
   ],
   "medicalRecords": [
@@ -232,110 +253,20 @@
           }
         ]
       }
-    },
-    {
-      "id": "doc-1795191224693-8ef496",
-      "patientId": "patient-rahul",
-      "patientName": "Rahul Sharma",
-      "familyMemberId": "fam-1",
-      "clinicId": "clinic-uploaded",
-      "clinicName": "Audit Lab",
-      "doctorName": "Self-Uploaded",
-      "visitDate": "2026-11-20",
-      "type": "BLOODWORK",
-      "title": "Audit Verification Blood Test",
-      "fileUrl": "/api/documents/doc-1795191224693-8ef496/file?role=PATIENT",
-      "aiSummary": "Uploaded bloodwork (audit-lab-test.png) stored safely. Sample extraction fallback shown (live Gemini unavailable). Doctor review required.",
-      "isAbnormal": false,
-      "structuredData": {
-        "tests": [
-          {
-            "name": "Haemoglobin",
-            "value": "13.5 g/dL",
-            "range": "12.0 - 16.0 g/dL"
-          },
-          {
-            "name": "WBC Count",
-            "value": "7,200 cells/uL",
-            "range": "4,000 - 11,000 cells/uL"
-          }
-        ],
-        "isDemoData": true,
-        "liveGemini": false,
-        "uploadedFileName": "audit-lab-test.png"
-      }
     }
   ],
-  "consentRequests": [
+  "consentRequests": [],
+  "whatsappMessages": [
     {
-      "patientId": "patient-rahul",
-      "patientName": "Rahul Sharma",
-      "clinicId": "clinic-audit-test",
-      "clinicName": "Audit Clinic",
-      "requesterRole": "DOCTOR",
-      "requesterName": "Dr. Audit",
-      "scope": "ALL_MEDICAL_RECORDS",
-      "id": "consent-1795191224653",
-      "status": "APPROVED",
-      "requestedAt": "2026-11-20T16:13:44.653Z",
-      "respondedAt": "2026-11-20T16:13:44.678Z"
-    },
-    {
-      "patientId": "patient-rahul",
-      "patientName": "Rahul Sharma",
-      "clinicId": "clinic-audit-test",
-      "clinicName": "Audit Clinic",
-      "requesterRole": "DOCTOR",
-      "requesterName": "Dr. Audit",
-      "scope": "ALL_MEDICAL_RECORDS",
-      "id": "consent-1795192591162",
-      "status": "APPROVED",
-      "requestedAt": "2026-11-20T16:36:31.162Z",
-      "respondedAt": "2026-11-20T16:36:31.177Z"
+      "id": "wa-1795196187513",
+      "recipientPhone": "+91 98765 43210",
+      "recipientName": "Rahul Sharma",
+      "type": "BOOKING_CONFIRMATION",
+      "title": "Appointment Booked (In-Clinic)",
+      "body": "Patient: Rahul Sharma (Self)\nDoctor: Dr. Arvind Rao (General Physician & Diabetologist)\nClinic: Apex Care Super Clinic & Diagnostics, Indiranagar 100ft Road\nMode: In-Clinic\nTime: 09:30 AM, Tomorrow, Nov 21\nFee: ₹400 (Pay at consultation — zero upfront payment)",
+      "timestamp": "11:06 pm"
     }
   ],
-  "whatsappMessages": [],
-  "aiHealthReport": {
-    "chronic_conditions": [
-      "Type 2 Diabetes Mellitus",
-      "Essential Hypertension"
-    ],
-    "medication_history": [],
-    "abnormal_lab_trends": [
-      "HbA1c 7.1% (Elevated)",
-      "Fasting glucose 128 mg/dL (Elevated)"
-    ],
-    "severity_flags": [
-      {
-        "level": "MODERATE",
-        "note": "Suboptimally controlled Type 2 Diabetes Mellitus with HbA1c at 7.1% and fasting glucose at 128 mg/dL."
-      }
-    ],
-    "doctor_discussion_points": [
-      "Discuss strategies to achieve glycemic targets given the current HbA1c of 7.1%.",
-      "Review current medication adherence and lifestyle interventions for diabetes and hypertension management.",
-      "Monitor renal function (Creatinine 1.1 mg/dL) periodically."
-    ],
-    "disclaimer": "AI-Generated Summary • For Clinical Review Only • Not a Medical Diagnosis",
-    "_modelUsed": "gemini-3.5-flash-lite",
-    "id": "report-1795192469455",
-    "patientId": "patient-rahul",
-    "patientName": "Suresh Sharma",
-    "period": "Last 6 Months",
-    "generatedAt": "2026-11-20T16:34:29.455Z",
-    "isAiGenerated": true,
-    "isDemoData": false,
-    "liveGemini": true
-  },
-  "uploadedFiles": {
-    "doc-1795191224693-8ef496": {
-      "id": "doc-1795191224693-8ef496",
-      "patientId": "patient-rahul",
-      "fileName": "audit-lab-test.png",
-      "storedName": "doc-1795191224693-8ef496.png",
-      "mimeType": "image/png",
-      "sizeBytes": 70,
-      "uploadedAt": "2026-11-20T16:13:44.696Z"
-    }
-  }
+  "aiHealthReport": null,
+  "uploadedFiles": {}
 }

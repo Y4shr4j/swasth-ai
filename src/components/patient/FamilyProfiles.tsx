@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { SEED_FAMILY_MEMBERS } from '../../data/seedData';
-import { User, ChevronRight, Shield, Heart, X } from 'lucide-react';
+import { ChevronRight, Shield, Heart, X } from 'lucide-react';
 import AIHealthReportModal from './AIHealthReportModal';
+import Avatar from '../common/Avatar';
 
 export default function FamilyProfiles() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -17,10 +18,11 @@ export default function FamilyProfiles() {
         {SEED_FAMILY_MEMBERS.map(m => (
           <button key={m.id} onClick={() => setSelectedId(m.id)}
             className="w-full bg-white rounded-xl border border-slate-200 p-4 flex items-center gap-3 text-left hover:shadow-md transition">
-            <div className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm ${
-              m.relation === 'Self' ? 'bg-emerald-100 text-emerald-700' :
-              m.relation === 'Father' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'
-            }`}>{m.name.split(' ').map(n => n[0]).join('')}</div>
+            <Avatar
+              src={m.avatar}
+              name={m.name}
+              className="w-12 h-12 rounded-full ring-2 ring-[#EBF6FC]"
+            />
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-slate-900">{m.name}</div>
               <div className="flex items-center gap-2 mt-0.5">
@@ -51,10 +53,11 @@ export default function FamilyProfiles() {
 
             <div className="p-5 space-y-4">
               <div className="flex items-center gap-3">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center font-bold text-lg ${
-                  selected.relation === 'Self' ? 'bg-emerald-100 text-emerald-700' :
-                  selected.relation === 'Father' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'
-                }`}>{selected.name.split(' ').map(n => n[0]).join('')}</div>
+                <Avatar
+                  src={selected.avatar}
+                  name={selected.name}
+                  className="w-16 h-16 rounded-full ring-2 ring-[#D6EEF9]"
+                />
                 <div>
                   <div className="text-sm text-slate-500">{selected.relation} • {selected.age} yrs • {selected.gender}</div>
                   <div className="text-sm text-slate-500 mt-0.5">{selected.phone}</div>
@@ -87,7 +90,7 @@ export default function FamilyProfiles() {
               )}
 
               <button onClick={() => { setSelectedId(null); setShowAIReport(true); }}
-                className="w-full flex items-center justify-center gap-2 py-3 bg-rose-50 text-rose-600 rounded-xl font-semibold border border-rose-200 hover:bg-rose-100 transition">
+                className="w-full flex items-center justify-center gap-2 py-3 bg-[#0B5D7A] text-white rounded-xl font-semibold hover:bg-[#084961] shadow-sm transition">
                 <Heart className="w-4 h-4" /> Generate AI Health Report
               </button>
             </div>

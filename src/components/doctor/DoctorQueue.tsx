@@ -90,7 +90,16 @@ export default function DoctorQueue() {
             }`}>#{apt.queuePosition}</div>
 
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-slate-900">{apt.patientName}</div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="font-semibold text-slate-900">{apt.familyMemberName || apt.patientName}</span>
+                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-[#EBF6FC] text-[#0B5D7A] border border-[#AEDCF2]">
+                  {apt.consultationMode === 'VIDEO'
+                    ? 'Video'
+                    : apt.consultationMode === 'HOME_VISIT'
+                    ? 'Home Visit'
+                    : 'In-Clinic'}
+                </span>
+              </div>
               <div className="text-xs text-slate-500 truncate">{apt.symptoms || 'No symptoms recorded'}</div>
               <div className="flex items-center gap-3 mt-1 text-xs text-slate-400">
                 <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{apt.slotTime}</span>

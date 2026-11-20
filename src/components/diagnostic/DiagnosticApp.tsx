@@ -85,7 +85,7 @@ export default function DiagnosticApp() {
             </div>
             <button
               type="submit"
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 shadow-sm transition"
+              className="px-6 py-3 bg-[#0B5D7A] text-white rounded-xl text-sm font-semibold hover:bg-[#084961] shadow-sm transition"
             >
               Lookup Patient
             </button>
@@ -142,7 +142,7 @@ export default function DiagnosticApp() {
                 {!isPending ? (
                   <button
                     onClick={handleRequestConsent}
-                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-semibold hover:bg-blue-700 transition shadow-sm"
+                    className="mt-2 inline-flex items-center gap-2 px-5 py-2.5 bg-[#0B5D7A] text-white rounded-xl text-xs font-semibold hover:bg-[#084961] transition shadow-sm"
                   >
                     <ShieldCheck className="w-4 h-4" />
                     Request Access from Rahul Sharma
@@ -217,7 +217,7 @@ export default function DiagnosticApp() {
                 if (id !== 'lookup') setSearched(true);
               }}
               className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition ${
-                tab === id ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'
+                tab === id ? 'text-[#0B5D7A]' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
               <Icon className="w-5 h-5" />

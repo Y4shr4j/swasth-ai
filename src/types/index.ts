@@ -13,6 +13,10 @@ export interface Clinic {
   openHours: string;
   phone: string;
   address: string;
+  coords: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export interface Doctor {
@@ -37,6 +41,7 @@ export interface FamilyMember {
   age: number;
   gender: string;
   phone: string;
+  avatar?: string;
   govIds: {
     pan?: string;
     aadhaar?: string;
@@ -50,6 +55,8 @@ export interface FamilyMember {
 }
 
 export type AppointmentStatus = 'BOOKED' | 'CHECKED_IN' | 'IN_CONSULTATION' | 'COMPLETED' | 'NO_SHOW';
+
+export type ConsultationMode = 'IN_CLINIC' | 'VIDEO' | 'HOME_VISIT';
 
 export interface Appointment {
   id: string;
@@ -66,6 +73,7 @@ export interface Appointment {
   clinicAddress: string;
   slotTime: string;
   slotDate: string;
+  consultationMode?: ConsultationMode;
   status: AppointmentStatus;
   queuePosition: number;
   checkedInAt?: string;
@@ -100,7 +108,7 @@ export interface MedicalRecord {
   clinicName: string;
   doctorName: string;
   visitDate: string;
-  type: 'PRESCRIPTION' | 'SCAN' | 'BLOODWORK';
+  type: 'PRESCRIPTION' | 'SCAN' | 'BLOODWORK' | 'SYMPTOM_CHECKIN';
   title: string;
   structuredData?: StructuredPrescription | any;
   fileUrl?: string;
@@ -164,6 +172,22 @@ export interface ClinicMetricData {
   }>;
   isAiGenerated: boolean;
   isDemoData: boolean;
+}
+
+export interface PreSurgicalSummary {
+  id: string;
+  patientId: string;
+  patientName: string;
+  generatedAt: string;
+  medical_history_overview: string[];
+  allergies: string[];
+  current_medications: string[];
+  recent_diagnostics: string[];
+  previous_surgeries: string[];
+  disclaimer: string;
+  isAiGenerated: boolean;
+  isDemoData: boolean;
+  liveGemini?: boolean;
 }
 
 export interface SimulatedWhatsAppMessage {

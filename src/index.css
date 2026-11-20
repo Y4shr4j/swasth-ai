@@ -8,7 +8,8 @@
     -webkit-font-smoothing: antialiased;
   }
   body {
-    @apply bg-slate-50 text-slate-900;
+    background-color: #F3F8FC;
+    color: #0F2A3D;
   }
 }
 
@@ -20,9 +21,4 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
-}
-
-:root {
-  --whatsapp-green: #25D366;
-  --whatsapp-dark: #128C7E;
 }

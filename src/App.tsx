@@ -34,7 +34,7 @@ export default function App() {
   const msgCount = state.whatsappMessages.length;
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[#F3F8FC]">
       <TopRoleSwitcher />
       <ConsentGateModal />
 

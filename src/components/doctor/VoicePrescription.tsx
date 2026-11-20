@@ -67,9 +67,15 @@ export default function VoicePrescription({ appointment, onBack }: { appointment
     dispatch({
       type: 'ADD_MEDICAL_RECORD',
       payload: {
-        id: `rec-${Date.now()}`, patientId: appointment.patientId, patientName: appointment.patientName,
-        clinicId: appointment.clinicId, clinicName: appointment.clinicName, doctorName: appointment.doctorName,
-        visitDate: new Date().toISOString().slice(0, 10), type: 'PRESCRIPTION',
+        id: `rec-${Date.now()}`,
+        patientId: appointment.patientId,
+        patientName: appointment.familyMemberName || appointment.patientName,
+        familyMemberId: appointment.familyMemberId,
+        clinicId: appointment.clinicId,
+        clinicName: appointment.clinicName,
+        doctorName: appointment.doctorName,
+        visitDate: new Date().toISOString().slice(0, 10),
+        type: 'PRESCRIPTION',
         title: `Consultation — ${diagnosis.slice(0, 50)}`,
         structuredData: {
           symptoms_diagnosis: diagnosis,
@@ -155,7 +161,7 @@ export default function VoicePrescription({ appointment, onBack }: { appointment
             {isRecording ? <><MicOff className="w-4 h-4" /> Stop Recording</> : <><Mic className="w-4 h-4" /> Start Recording</>}
           </button>
           <button onClick={handleExtract} disabled={!transcript.trim() || loading}
-            className="flex items-center gap-2 px-5 py-2 bg-purple-600 text-white rounded-xl text-sm font-semibold hover:bg-purple-700 transition disabled:opacity-40">
+            className="flex items-center gap-2 px-5 py-2 bg-[#0B5D7A] text-white rounded-xl text-sm font-semibold hover:bg-[#084961] shadow-sm transition disabled:opacity-40">
             {loading ? <><Loader2 className="w-4 h-4 animate-spin" /> Processing...</> : <><Brain className="w-4 h-4" /> Extract with Gemini</>}
           </button>
         </div>

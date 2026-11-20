@@ -50,12 +50,12 @@ export default function Logo({
 
   return (
     <div className={`flex items-center gap-2.5 shrink-0 ${className}`}>
-      <div className={`${boxSizes[size]} bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center text-white shadow-md shadow-emerald-600/20`}>
+      <div className={`${boxSizes[size]} bg-gradient-to-br from-[#0EA5A4] to-[#0B5D7A] flex items-center justify-center text-white shadow-md shadow-[#0B5D7A]/20`}>
         <LogoIcon className={`${iconSizes[size]} text-white`} />
       </div>
       {showText && (
-        <span className={`font-bold ${textSizes[size]} tracking-tight text-slate-900`}>
-          Swasth<span className="text-emerald-600">AI</span>
+        <span className={`font-bold ${textSizes[size]} tracking-tight text-[#0F2A3D]`}>
+          Swasth<span className="text-[#0EA5A4]">AI</span>
         </span>
       )}
     </div>

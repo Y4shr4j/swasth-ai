@@ -17,9 +17,10 @@ import {
 } from 'lucide-react';
 
 const TYPE_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  PRESCRIPTION: { bg: 'bg-emerald-100', text: 'text-emerald-700', label: 'Rx' },
-  BLOODWORK: { bg: 'bg-blue-100', text: 'text-blue-700', label: 'Lab' },
-  SCAN: { bg: 'bg-purple-100', text: 'text-purple-700', label: 'Scan' },
+  PRESCRIPTION: { bg: 'bg-[#E6F7F5]', text: 'text-[#0EA5A4]', label: 'Rx' },
+  BLOODWORK: { bg: 'bg-[#EBF6FC]', text: 'text-[#0B5D7A]', label: 'Lab' },
+  SCAN: { bg: 'bg-indigo-50', text: 'text-indigo-700', label: 'Scan' },
+  SYMPTOM_CHECKIN: { bg: 'bg-amber-50', text: 'text-amber-700', label: 'Check-In' },
 };
 
 const ALLOWED_TYPES = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
@@ -186,12 +187,12 @@ export default function MedicalVault() {
 
       {/* Type Filter Pills */}
       <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-        {['All', 'PRESCRIPTION', 'BLOODWORK', 'SCAN'].map(t => (
+        {['All', 'PRESCRIPTION', 'BLOODWORK', 'SCAN', 'SYMPTOM_CHECKIN'].map(t => (
           <button
             key={t}
             onClick={() => setTypeFilter(t)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap ${
-              typeFilter === t ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
+              typeFilter === t ? 'bg-[#0B5D7A] text-white' : 'bg-[#EBF6FC] text-[#0B5D7A]'
             }`}
           >
             {t === 'All' ? 'All' : TYPE_STYLES[t]?.label || t}

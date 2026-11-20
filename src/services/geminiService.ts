@@ -1,4 +1,11 @@
-import { StructuredPrescription, AIHealthReport, ClinicMetricData, FamilyMember, MedicalRecord } from '../types';
+import {
+  StructuredPrescription,
+  AIHealthReport,
+  ClinicMetricData,
+  FamilyMember,
+  MedicalRecord,
+  PreSurgicalSummary,
+} from '../types';
 
 /**
  * All Gemini AI requests are routed strictly through the Node.js backend (/api/gemini/*).
@@ -54,6 +61,35 @@ export async function callClinicGrowth(metrics: ClinicMetricData, _unusedKey?: s
   });
   if (!response.ok) {
     throw new Error(`Clinic growth analysis failed (${response.status})`);
+  }
+  return await response.json();
+}
+
+export async function callPreSurgicalSummary(
+  familyMember: FamilyMember,
+  records: MedicalRecord[],
+  clinicId: string
+): Promise<PreSurgicalSummary> {
+  const response = await fetch('/api/gemini/pre-surgical-summary', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      patientId: familyMember.primaryPatientId,
+      clinicId,
+      familyMemberName: familyMember.name,
+      knownConditions: familyMember.knownConditions,
+      records: records.map(r => ({
+        title: r.title,
+        type: r.type,
+        visitDate: r.visitDate,
+        aiSummary: r.aiSummary,
+        structuredData: r.structuredData,
+      })),
+    }),
+  });
+  if (!response.ok) {
+    const err = await response.json().catch(() => ({}));
+    throw new Error(err.message || `Pre-surgical summary denied (${response.status})`);
   }
   return await response.json();
 }

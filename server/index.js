@@ -825,6 +825,93 @@ Area Breakdown: ${JSON.stringify(metrics?.areaBreakdown || [])}`;
   }
 });
 
+// ─── Gemini Route 4: Pre-Surgical Health Summary (Consent-Gated) ─────────────
+app.post('/api/gemini/pre-surgical-summary', async (req, res) => {
+  const {
+    patientId = 'patient-rahul',
+    clinicId,
+    familyMemberName = 'Patient',
+    knownConditions = [],
+    records = [],
+  } = req.body || {};
+
+  // Strictly enforce backend consent gate
+  if (!clinicId || !hasApprovedConsent(patientId, String(clinicId))) {
+    return res.status(403).json({
+      error: 'CONSENT_REQUIRED',
+      message:
+        'Access denied. Patient approval is required before generating a surgeon-facing pre-surgical summary.',
+    });
+  }
+
+  const recordSummary = records
+    .map((r, i) => `${i + 1}. ${r.title} (${r.type}, ${r.visitDate}): ${r.aiSummary || 'No summary'}`)
+    .join('\n');
+
+  const disclaimer =
+    'AI-Generated Summary • Requires Qualified Surgeon Review • Does NOT provide surgical risk scores or surgical clearance.';
+
+  const baseFields = {
+    id: `presurg-${Date.now()}`,
+    patientId,
+    patientName: familyMemberName,
+    generatedAt: new Date().toISOString(),
+    disclaimer,
+    isAiGenerated: true,
+  };
+
+  try {
+    const systemInstruction = `You are a clinical documentation assistant preparing a neutral, surgeon-facing Pre-Surgical Health Summary for SwasthAI.
+CRITICAL SAFETY RULES:
+- Summarize ONLY documented facts from the provided history. Never invent allergies, surgeries, or lab values.
+- NEVER generate surgical risk scores (no ASA class, no RCRI score, no risk percentages).
+- NEVER issue surgical clearance or fitness-for-surgery decisions.
+- If allergies or previous surgeries are not documented in the records, explicitly state "None documented in available records (verify directly with patient)".
+Return ONLY valid JSON:
+{
+  "medical_history_overview": ["string"],
+  "allergies": ["string"],
+  "current_medications": ["string"],
+  "recent_diagnostics": ["string"],
+  "previous_surgeries": ["string"]
+}`;
+
+    const userPrompt = `Patient: ${familyMemberName}
+Known Conditions: ${knownConditions.join(', ') || 'None documented'}
+
+Available Records:
+${recordSummary || 'No records provided'}
+
+Compile a structured pre-surgical summary for the reviewing surgeon.`;
+
+    const result = await callGemini(systemInstruction, [{ text: userPrompt }]);
+    return res.json({
+      medical_history_overview: result.medical_history_overview || [],
+      allergies: result.allergies || ['None documented in available records (verify directly with patient)'],
+      current_medications: result.current_medications || [],
+      recent_diagnostics: result.recent_diagnostics || [],
+      previous_surgeries: result.previous_surgeries || ['None documented in available records (verify directly with patient)'],
+      ...baseFields,
+      isDemoData: false,
+      liveGemini: true,
+    });
+  } catch (err) {
+    console.error('[pre-surgical-summary] Gemini error:', err.message);
+    return res.json({
+      medical_history_overview:
+        knownConditions.length > 0 ? knownConditions : ['No chronic conditions documented in available records'],
+      allergies: ['None documented in available records (verify directly with patient)'],
+      current_medications: ['Review active prescriptions in patient vault prior to procedure'],
+      recent_diagnostics: records.slice(0, 3).map(r => `${r.visitDate}: ${r.title}`),
+      previous_surgeries: ['None documented in available records (verify directly with patient)'],
+      ...baseFields,
+      isDemoData: true,
+      liveGemini: false,
+      errorReason: err.message,
+    });
+  }
+});
+
 // ─── Static Frontend (Production / Cloud Run) ────────────────────────────────
 const distPath = path.join(__dirname, '..', 'dist');
 app.use(express.static(distPath));

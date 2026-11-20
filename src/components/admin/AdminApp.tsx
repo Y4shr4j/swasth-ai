@@ -29,7 +29,7 @@ export default function AdminApp() {
         {/* Header */}
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <span className="text-xs font-semibold text-purple-700 uppercase tracking-wide bg-purple-50 px-2.5 py-1 rounded-full border border-purple-200">
+            <span className="text-xs font-semibold text-[#0B5D7A] uppercase tracking-wide bg-[#EBF6FC] px-2.5 py-1 rounded-full border border-[#AEDCF2]">
               Platform Executive Control
             </span>
             <h1 className="text-2xl font-bold text-slate-900 mt-2">SwasthAI — Founder / Admin Dashboard</h1>
@@ -87,7 +87,7 @@ export default function AdminApp() {
                       <td className="px-4 py-3.5 font-semibold text-slate-900">{clinic.name}</td>
                       <td className="px-4 py-3.5 text-slate-600">{clinic.area}, {clinic.city}</td>
                       <td className="px-4 py-3.5">
-                        <span className="bg-purple-50 text-purple-700 text-xs font-semibold px-2.5 py-1 rounded-full border border-purple-200">
+                        <span className="bg-[#EBF6FC] text-[#0B5D7A] text-xs font-semibold px-2.5 py-1 rounded-full border border-[#AEDCF2]">
                           {clinic.subscriptionPlan}
                         </span>
                       </td>
@@ -116,7 +116,7 @@ export default function AdminApp() {
               key={id}
               onClick={() => setTab(id)}
               className={`flex-1 flex flex-col items-center gap-0.5 py-2.5 text-xs font-medium transition ${
-                tab === id ? 'text-purple-600' : 'text-slate-400 hover:text-slate-600'
+                tab === id ? 'text-[#0B5D7A]' : 'text-slate-400 hover:text-slate-600'
               }`}
             >
               <Icon className="w-5 h-5" />

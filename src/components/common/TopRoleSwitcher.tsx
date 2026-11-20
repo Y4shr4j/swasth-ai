@@ -1,6 +1,6 @@
 import { useAppStore } from '../../store/appStore';
 import { UserRole } from '../../types';
-import { User, Stethoscope, ClipboardList, BarChart3, FlaskConical, ArrowLeft, ShieldCheck, LucideIcon } from 'lucide-react';
+import { User, Stethoscope, ClipboardList, BarChart3, FlaskConical, ShieldCheck, LucideIcon } from 'lucide-react';
 import Logo from './Logo';
 
 const ROLES: { role: UserRole; label: string; icon: LucideIcon }[] = [
@@ -15,26 +15,11 @@ export default function TopRoleSwitcher() {
   const { state, dispatch } = useAppStore();
 
   return (
-    <div className="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#DFECF5] shadow-[0_2px_12px_rgba(11,93,122,0.05)]">
       <div className="max-w-7xl mx-auto px-2 sm:px-4">
         <div className="flex items-center justify-between h-14">
-          {/* Back Button + App Logo */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <button
-              onClick={() => dispatch({ type: 'GO_BACK' })}
-              disabled={state.navHistory.length === 0}
-              title={state.navHistory.length > 0 ? 'Go back to previous page' : 'No previous page'}
-              aria-label="Go back"
-              className={`p-1.5 sm:p-2 rounded-lg border transition ${
-                state.navHistory.length > 0
-                  ? 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700 cursor-pointer'
-                  : 'border-transparent text-slate-300 cursor-not-allowed'
-              }`}
-            >
-              <ArrowLeft className="w-4 h-4" />
-            </button>
-            <Logo />
-          </div>
+          {/* App Logo */}
+          <Logo />
 
           {/* Role Tabs */}
           <div className="flex items-center gap-0.5 sm:gap-1 overflow-x-auto scrollbar-hide">
