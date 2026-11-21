@@ -3,6 +3,8 @@ import { ShieldCheck, ShieldX } from 'lucide-react';
 
 export default function ConsentGateModal() {
   const { state, dispatch } = useAppStore();
+  // Only display the approval prompt on the Patient's screen, never on the Doctor's screen
+  if (state.role !== 'PATIENT') return null;
   const pending = state.consentRequests.find(c => c.status === 'PENDING' && c.patientId === 'patient-rahul');
   if (!pending) return null;
 

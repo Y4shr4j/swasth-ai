@@ -7,7 +7,6 @@ import PatientApp from './components/patient/PatientApp';
 import DoctorApp from './components/doctor/DoctorApp';
 import ReceptionistApp from './components/receptionist/ReceptionistApp';
 import AdminApp from './components/admin/AdminApp';
-import DiagnosticApp from './components/diagnostic/DiagnosticApp';
 import { useAppStore } from './store/appStore';
 
 function RoleView() {
@@ -21,8 +20,6 @@ function RoleView() {
       return <ReceptionistApp />;
     case 'ADMIN':
       return <AdminApp />;
-    case 'DIAGNOSTIC':
-      return <DiagnosticApp />;
     default:
       return <PatientApp />;
   }

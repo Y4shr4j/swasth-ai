@@ -70,7 +70,39 @@ const initialState: AppState = {
   serverGeminiReady: false,
   isLoading: false,
   loadingMessage: '',
-  aiHealthReport: null,
+  aiHealthReport: {
+    id: 'report-seed-suresh',
+    patientId: 'patient-rahul',
+    patientName: 'Suresh Sharma',
+    period: 'Last 6 Months',
+    generatedAt: '2026-11-20T09:00:00.000Z',
+    chronic_conditions: [
+      'Type 2 Diabetes Mellitus (HbA1c improved from 8.2% to 7.1%)',
+      'Essential Hypertension (Controlled on Telmisartan 40mg)',
+      'Mild Dyslipidemia (Total Cholesterol 188 mg/dL)',
+    ],
+    medication_history: [
+      { drug: 'Metformin 500mg ER', status: 'Active', adherence: 'Regular' },
+      { drug: 'Telmisartan 40mg', status: 'Active', adherence: 'Regular' },
+      { drug: 'Atorvastatin 10mg', status: 'Active', adherence: 'Regular' },
+    ],
+    abnormal_lab_trends: [
+      'Serum Creatinine: 1.1 mg/dL (Borderline — monitor renal profile quarterly)',
+      'Fasting Glucose: 128 mg/dL (Improved from 164 mg/dL, still above target)',
+    ],
+    severity_flags: [
+      { level: 'MODERATE', note: 'Annual diabetic retinopathy eye screening overdue by 2 months' },
+      { level: 'LOW', note: 'Urine microalbumin/creatinine ratio screening pending' },
+    ],
+    doctor_discussion_points: [
+      'Schedule diabetic retinopathy fundus exam',
+      'Order urine microalbumin/creatinine ratio',
+      'Discuss fasting glucose trend (128 mg/dL)',
+    ],
+    disclaimer: 'AI-Generated Summary • For Clinical Review Only • Not a Medical Diagnosis',
+    isAiGenerated: true,
+    isDemoData: true,
+  },
   clinicGrowthData: { ...SEED_CLINIC_METRICS },
   activePrescriptionDraft: null,
   activePatientForDoctor: null,
@@ -119,8 +151,7 @@ function appReducer(state: AppState, action: Action): AppState {
         medicalRecords: action.payload.medicalRecords ?? state.medicalRecords,
         consentRequests: action.payload.consentRequests ?? state.consentRequests,
         whatsappMessages: action.payload.whatsappMessages ?? state.whatsappMessages,
-        aiHealthReport:
-          action.payload.aiHealthReport !== undefined ? action.payload.aiHealthReport : state.aiHealthReport,
+        aiHealthReport: action.payload.aiHealthReport ?? state.aiHealthReport,
       };
     case 'ADD_APPOINTMENT':
       if (state.appointments.some(a => a.id === action.payload.id)) return state;
@@ -186,14 +217,16 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
 
   // Load persisted state + check backend health + subscribe to real-time SSE stream
   useEffect(() => {
-    fetch('/api/health')
+    const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
+    fetch(`${apiBase}/api/health`)
       .then(r => (r.ok ? r.json() : null))
       .then(data => {
         if (data) dispatch({ type: 'SET_SERVER_GEMINI_READY', payload: Boolean(data.geminiConfigured) });
       })
       .catch(() => {});
 
-    fetch('/api/state')
+    fetch(`${apiBase}/api/state`)
       .then(r => (r.ok ? r.json() : null))
       .then(data => {
         if (data) dispatch({ type: 'SYNC_SERVER_STATE', payload: data });
@@ -202,7 +235,7 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
 
     let evtSource: EventSource | null = null;
     try {
-      evtSource = new EventSource('/api/events');
+      evtSource = new EventSource(`${apiBase}/api/events`);
       const onSync = (event: MessageEvent) => {
         try {
           const data = JSON.parse(event.data);
@@ -240,38 +273,39 @@ export function AppStoreProvider({ children }: { children: ReactNode }) {
     dispatch(action);
 
     // Persist to backend so separate sessions/refreshes stay in sync
+    const apiBase = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
     if (action.type === 'ADD_APPOINTMENT') {
-      fetch('/api/appointments', {
+      fetch(`${apiBase}/api/appointments`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
       }).catch(() => {});
     } else if (action.type === 'UPDATE_APPOINTMENT_STATUS') {
-      fetch(`/api/appointments/${encodeURIComponent(action.payload.id)}`, {
+      fetch(`${apiBase}/api/appointments/${encodeURIComponent(action.payload.id)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
       }).catch(() => {});
     } else if (action.type === 'ADD_CONSENT_REQUEST') {
-      fetch('/api/consent', {
+      fetch(`${apiBase}/api/consent`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
       }).catch(() => {});
     } else if (action.type === 'RESPOND_CONSENT') {
-      fetch(`/api/consent/${encodeURIComponent(action.payload.id)}`, {
+      fetch(`${apiBase}/api/consent/${encodeURIComponent(action.payload.id)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: action.payload.status }),
       }).catch(() => {});
     } else if (action.type === 'ADD_WHATSAPP_MESSAGE') {
-      fetch('/api/notifications', {
+      fetch(`${apiBase}/api/notifications`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),
       }).catch(() => {});
     } else if (action.type === 'ADD_MEDICAL_RECORD') {
-      fetch('/api/records', {
+      fetch(`${apiBase}/api/records`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(action.payload),

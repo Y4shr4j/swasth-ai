@@ -61,6 +61,7 @@ export default function DoctorDiscovery() {
   const [selectedMemberId, setSelectedMemberId] = useState<string>(SEED_FAMILY_MEMBERS[0].id);
   const [symptoms, setSymptoms] = useState('');
   const [bookedDone, setBookedDone] = useState(false);
+  const [bookedPaymentMode, setBookedPaymentMode] = useState<'PAID_ONLINE' | 'PAY_AT_CLINIC'>('PAY_AT_CLINIC');
 
   const activeOrigin = gpsCoords || MANUAL_AREAS[manualAreaKey];
 
@@ -103,10 +104,13 @@ export default function DoctorDiscovery() {
   const activeClinic = activeDoc ? SEED_CLINICS.find(c => c.id === activeDoc.clinicId) : null;
   const selectedMember = SEED_FAMILY_MEMBERS.find(m => m.id === selectedMemberId) || SEED_FAMILY_MEMBERS[0];
 
-  function handleConfirmBooking() {
+  function handleConfirmBooking(paidNow: boolean) {
     if (!activeDoc || !activeClinic) return;
     const modeLabel =
       consultationMode === 'IN_CLINIC' ? 'In-Clinic' : consultationMode === 'VIDEO' ? 'Video Consult' : 'Home Visit';
+    const paymentText = paidNow
+      ? `₹${activeDoc.consultationFee} (Paid Online)`
+      : `₹${activeDoc.consultationFee} (Pay at Clinic)`;
 
     const apt = {
       id: `apt-${Date.now()}`,
@@ -126,7 +130,7 @@ export default function DoctorDiscovery() {
       consultationMode,
       status: 'BOOKED' as const,
       queuePosition: 4,
-      feePaid: false,
+      feePaid: paidNow,
       symptoms,
     };
 
@@ -139,10 +143,11 @@ export default function DoctorDiscovery() {
         recipientName: selectedMember.name,
         type: 'BOOKING_CONFIRMATION',
         title: `Appointment Booked (${modeLabel})`,
-        body: `Patient: ${selectedMember.name} (${selectedMember.relation})\nDoctor: ${activeDoc.name} (${activeDoc.specialization})\nClinic: ${activeClinic.name}, ${activeClinic.area}\nMode: ${modeLabel}\nTime: ${selectedSlot}, ${selectedDate}\nFee: ₹${activeDoc.consultationFee} (Pay at consultation — zero upfront payment)`,
+        body: `Patient: ${selectedMember.name} (${selectedMember.relation})\nDoctor: ${activeDoc.name} (${activeDoc.specialization})\nClinic: ${activeClinic.name}, ${activeClinic.area}\nMode: ${modeLabel}\nTime: ${selectedSlot}, ${selectedDate}\nFee: ${paymentText}`,
         timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
       },
     });
+    setBookedPaymentMode(paidNow ? 'PAID_ONLINE' : 'PAY_AT_CLINIC');
     setBookedDone(true);
   }
 
@@ -286,7 +291,11 @@ export default function DoctorDiscovery() {
                   {activeDoc.name} • {selectedSlot}, {selectedDate} •{' '}
                   {consultationMode === 'IN_CLINIC' ? 'In-Clinic' : consultationMode === 'VIDEO' ? 'Video Consult' : 'Home Visit'}
                 </p>
-                <p className="text-xs text-[#5A7184]">No upfront payment charged. Pay ₹{activeDoc.consultationFee} at consultation.</p>
+                <p className="text-xs text-[#5A7184]">
+                  {bookedPaymentMode === 'PAID_ONLINE'
+                    ? `Payment of ₹${activeDoc.consultationFee} completed (simulated).`
+                    : `Booked with zero upfront payment. Pay ₹${activeDoc.consultationFee} at the clinic.`}
+                </p>
                 <button
                   onClick={() => setBookingDoc(null)}
                   className="mt-4 px-6 py-2.5 bg-[#0B5D7A] text-white rounded-xl font-semibold text-sm hover:bg-[#084961]"
@@ -406,18 +415,22 @@ export default function DoctorDiscovery() {
                   />
                 </div>
 
-                {/* Zero-Pay Instant Book Button */}
-                <div className="space-y-1.5">
+                {/* Two Clear Booking Options: Pay & Book OR Book & Pay at Clinic */}
+                <div className="space-y-2 pt-1">
                   <button
                     type="button"
-                    onClick={handleConfirmBooking}
+                    onClick={() => handleConfirmBooking(true)}
                     className="w-full py-3 bg-[#0B5D7A] text-white rounded-xl font-semibold hover:bg-[#084961] shadow-sm transition text-sm"
                   >
-                    Book Appointment
+                    Pay ₹{activeDoc.consultationFee} &amp; Book
                   </button>
-                  <p className="text-[11px] text-center text-[#5A7184]">
-                    Zero upfront payment • Consultation fee ₹{activeDoc.consultationFee} payable at visit
-                  </p>
+                  <button
+                    type="button"
+                    onClick={() => handleConfirmBooking(false)}
+                    className="w-full py-3 bg-white text-[#0B5D7A] border border-[#AEDCF2] rounded-xl font-semibold hover:bg-[#EBF6FC] transition text-sm"
+                  >
+                    Book &amp; Pay at Clinic
+                  </button>
                 </div>
               </div>
             )}

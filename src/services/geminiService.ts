@@ -17,9 +17,11 @@ import {
  * Sample Data (Offline Mode) responses (isDemoData: true).
  */
 
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '');
+
 async function postJsonOrNull<T>(url: string, body: unknown): Promise<{ ok: true; data: T } | { ok: false; status: number; errorMessage?: string }> {
   try {
-    const response = await fetch(url, {
+    const response = await fetch(`${API_BASE}${url}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

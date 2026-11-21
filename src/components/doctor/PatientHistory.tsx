@@ -128,6 +128,18 @@ export default function PatientHistory() {
         scope: 'FULL_AI_HEALTH_REPORT',
       },
     });
+    dispatch({
+      type: 'ADD_WHATSAPP_MESSAGE',
+      payload: {
+        id: `wa-consent-${Date.now()}`,
+        recipientPhone: selectedMember.phone,
+        recipientName: selectedMember.name,
+        type: 'QUEUE_ALERT',
+        title: 'Consent Request from Dr. Arvind Rao',
+        body: `Dr. Arvind Rao (Apex Care Super Clinic) is requesting access to ${selectedMember.name}'s medical records & AI Health Report. Open the Patient tab to Approve or Deny.`,
+        timestamp: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }),
+      },
+    });
   };
 
   const handleGeneratePreSurgical = async () => {

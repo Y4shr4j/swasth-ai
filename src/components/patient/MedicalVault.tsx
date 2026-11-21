@@ -3,6 +3,7 @@ import { useAppStore } from '../../store/appStore';
 import { SEED_FAMILY_MEMBERS } from '../../data/seedData';
 import { uploadMedicalDocument } from '../../services/geminiService';
 import AIBadge from '../common/AIBadge';
+import AIHealthReportModal from './AIHealthReportModal';
 import {
   ChevronDown,
   ChevronUp,
@@ -32,8 +33,9 @@ export default function MedicalVault() {
   const [memberFilter, setMemberFilter] = useState<string>('All');
   const [expanded, setExpanded] = useState<string | null>(null);
 
-  // Upload modal state
+  // Upload & AI Report modal state
   const [showUpload, setShowUpload] = useState(false);
+  const [showAIReport, setShowAIReport] = useState(false);
   const [selectedMemberId, setSelectedMemberId] = useState<string>(SEED_FAMILY_MEMBERS[0].id);
   const [docType, setDocType] = useState<'BLOODWORK' | 'PRESCRIPTION' | 'SCAN'>('BLOODWORK');
   const [title, setTitle] = useState('');
@@ -169,12 +171,20 @@ export default function MedicalVault() {
           <h2 className="text-xl font-bold text-slate-900">Health Records</h2>
           <p className="text-xs text-slate-500">Prescriptions, labs &amp; past history</p>
         </div>
-        <button
-          onClick={() => setShowUpload(true)}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 text-white rounded-xl text-xs font-semibold hover:bg-emerald-700 shadow-sm transition shrink-0"
-        >
-          <Upload className="w-4 h-4" /> Upload History
-        </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <button
+            onClick={() => setShowAIReport(true)}
+            className="inline-flex items-center gap-1.5 px-3 py-2 bg-[#EBF6FC] text-[#0B5D7A] border border-[#AEDCF2] rounded-xl text-xs font-semibold hover:bg-[#D6EEF9] transition"
+          >
+            <Sparkles className="w-3.5 h-3.5" /> AI Report
+          </button>
+          <button
+            onClick={() => setShowUpload(true)}
+            className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#0B5D7A] text-white rounded-xl text-xs font-semibold hover:bg-[#084961] shadow-sm transition"
+          >
+            <Upload className="w-4 h-4" /> Upload
+          </button>
+        </div>
       </div>
 
       {/* Upload Success Banner */}
@@ -478,6 +488,7 @@ export default function MedicalVault() {
           </div>
         </div>
       )}
+      {showAIReport && <AIHealthReportModal onClose={() => setShowAIReport(false)} />}
     </div>
   );
 }
