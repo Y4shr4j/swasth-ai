@@ -247,7 +247,11 @@ function loadDb() {
 }
 
 function saveDb(db) {
-  fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+  try {
+    fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2), 'utf8');
+  } catch (err) {
+    console.error('[db] Failed to persist db.json (continuing in memory):', err.message);
+  }
 }
 
 let db = loadDb();
@@ -266,7 +270,15 @@ function broadcastState(eventType = 'state_update') {
     timestamp: new Date().toISOString(),
   });
   for (const res of sseClients) {
-    res.write(`event: ${eventType}\ndata: ${payload}\n\n`);
+    try {
+      if (res.writableEnded || res.destroyed) {
+        sseClients.delete(res);
+        continue;
+      }
+      res.write(`event: ${eventType}\ndata: ${payload}\n\n`);
+    } catch {
+      sseClients.delete(res);
+    }
   }
 }
 
@@ -277,24 +289,40 @@ app.get('/api/events', (req, res) => {
   res.flushHeaders();
 
   sseClients.add(res);
-  res.write(
-    `event: connected\ndata: ${JSON.stringify({
-      appointments: db.appointments,
-      medicalRecords: db.medicalRecords,
-      consentRequests: db.consentRequests,
-      whatsappMessages: db.whatsappMessages,
-      aiHealthReport: db.aiHealthReport,
-    })}\n\n`
-  );
+  try {
+    res.write(
+      `event: connected\ndata: ${JSON.stringify({
+        appointments: db.appointments,
+        medicalRecords: db.medicalRecords,
+        consentRequests: db.consentRequests,
+        whatsappMessages: db.whatsappMessages,
+        aiHealthReport: db.aiHealthReport,
+      })}\n\n`
+    );
+  } catch {
+    sseClients.delete(res);
+    return;
+  }
 
-  const keepAlive = setInterval(() => {
-    res.write(': ping\n\n');
-  }, 25000);
-
-  req.on('close', () => {
+  const cleanup = () => {
     clearInterval(keepAlive);
     sseClients.delete(res);
-  });
+  };
+
+  const keepAlive = setInterval(() => {
+    try {
+      if (res.writableEnded || res.destroyed) {
+        cleanup();
+        return;
+      }
+      res.write(': ping\n\n');
+    } catch {
+      cleanup();
+    }
+  }, 25000);
+
+  req.on('close', cleanup);
+  res.on('error', cleanup);
 });
 
 // ─── Health & State Endpoints ────────────────────────────────────────────────
@@ -920,9 +948,17 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(distPath, 'index.html'));
 });
 
+// ─── Process Safety Nets (Prevent Cloud Run 503 crashes) ─────────────────────
+process.on('uncaughtException', err => {
+  console.error('[server] Uncaught exception:', err.message);
+});
+process.on('unhandledRejection', err => {
+  console.error('[server] Unhandled rejection:', err);
+});
+
 // ─── Start Server ────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`SwasthAI backend listening on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`SwasthAI backend listening on 0.0.0.0:${PORT}`);
   console.log(`Server-side GEMINI_API_KEY: ${process.env.GEMINI_API_KEY ? 'CONFIGURED' : 'NOT SET'}`);
 });
